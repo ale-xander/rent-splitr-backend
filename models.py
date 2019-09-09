@@ -52,7 +52,7 @@ group_schema = GroupSchema()
 groups_schema = GroupSchema(many=True)
 
 # ------------------------------------ MEMBERS -------------------------------------------
-class Members(db.Model):
+class Member(db.Model):
     __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key = True)
@@ -60,7 +60,7 @@ class Members(db.Model):
     email = db.Column(db.String(50))
     acct_payable = db.Column(db.Integer)
     acct_receivable = db.Column(db.Integer)
-    group = db.Column(db.Integer, db.ForeignKey('group.id'))
+    group = db.Column(db.Integer, db.ForeignKey("group.id"), nullable=False)
 
     def __init__(self, name, email, acct_receivable, acct_payable, group):
         self.name = name
@@ -162,11 +162,11 @@ class Expenses(db.Model):
         if acct_payable != None:
             expense.acct_payable = acct_payable
         if total != None:
-        expense.total = total
-        db.session.commit()
+            expense.total = total
+            db.session.commit()
         return expense_schema.jsonify(expense)
 
-class ExpenseSchema(marshmallow.Schema):
+class ExpensesSchema(marshmallow.Schema):
     class Meta:
         fields = ('id', 'acct_receivable', 'acct_payable', 'total' )
 

@@ -59,7 +59,8 @@ def get_or_create_member(member_id=None):
         email = request.json['email']
         acct_receivable = request.json['acct_receivable']
         acct_payable = request.json['acct_payable']
-        return Member.create_member(name, email, acct_receivable, acct_payable,)
+        group = request.json['group']
+        return Member.create_member(name, email, acct_receivable, acct_payable, group)
     else:
         return Member.get_member(member_id)
 
@@ -82,8 +83,9 @@ def get_or_create_expenses(expenses_id=None):
     elif expenses_id == None:
         acct_receivable = request.json['acct_receivable']
         acct_payable = request.json['acct_payable']
-        total = reques.json['total']
-        return Expenses.create_expense(acct_receivable, acct_payable, total)
+        total = request.json['total']
+        member = request.json['member']
+        return Expenses.create_expense(acct_receivable, acct_payable, total, member)
     else:
         return Expenses.get_expense(expenses_id)
 
