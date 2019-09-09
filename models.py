@@ -94,7 +94,7 @@ class Members(db.Model):
         db.session.commit
         return member_schema.jsonify(member)
     @classmethod
-    def update_comment(cls, member_id, name=None, email=None, acct_receivable=None, acct_payable=None):
+    def update_member(cls, member_id, name=None, email=None, acct_receivable=None, acct_payable=None):
         member = Member.query.get(member_id)
         if name != None:
             member.name = name 

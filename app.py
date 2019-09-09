@@ -47,5 +47,29 @@ def destroy_or_modify_group(group_id):
         return Group.delete_group(group_id)
 
 
+@app.route('/member', methods=['POST', 'GET'])
+@app.route('/member/<member_id>', methods=['GET'])
+def get_or_create_member(member_id=None):
+    from models import Member
+    if member_id == None and request.method == 'GET':
+        return Member.get_members()
+    elif member_id == None:
+        name = request.json['name']
+        email = request.json['email']
+        acct_receivable = request.json['acct_receivable']
+        acct_payable = request.json['acct_payable']
+        return Member.create_member(name, email, acct_receivable, acct_payable,)
+    else:
+        return Member.get_member(member_id)
+
+@app.route('/member/<member_id>', methods=['PUT', 'DELETE'])
+def update_or_delete_member(member_id=None):
+    from models import Member
+    if request.method == 'PUT':
+        req = request.get_json()
+        return Member.update_member(member_id, **req)
+    else:
+        return Member.delete_member(member_id)
+
 if __name__ == '__main__':
     app.run(debug=DEBUG, port=PORT)
