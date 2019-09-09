@@ -155,7 +155,7 @@ class Expenses(db.Model):
         db.session.commit
         return expense_schema.jsonify(expense)
     @classmethod
-    def update_member(cls, acct_receivable=None, acct_payable=None, total=None):
+    def update_expenses(cls, acct_receivable=None, acct_payable=None, total=None):
         expense = Expenses.query.get(expense_id)
         if acct_receivable != None:
             expense.acct_receivable = acct_receivable 

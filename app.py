@@ -73,6 +73,28 @@ def update_or_delete_member(member_id=None):
         return Member.delete_member(member_id)
 
 # ------------------------------------ EXPENSES -------------------------------------------
+@app.route('/expenses', methods=['POST', 'GET'])
+@app.route('/expenses/<expenses_id>', methods=['GET'])
+def get_or_create_expenses(expenses_id=None):
+    from models import Expenses
+    if expenses_id == None and request.method == 'GET':
+        return Expenses.get_expenses()
+    elif expenses_id == None:
+        acct_receivable = request.json['acct_receivable']
+        acct_payable = request.json['acct_payable']
+        total = reques.json['total']
+        return Expenses.create_expense(acct_receivable, acct_payable, total)
+    else:
+        return Expenses.get_expense(expenses_id)
+
+@app.route('/expenses/<expenses_id>', methods=['PUT', 'DELETE'])
+def update_or_delete_expenses(expenses_id=None):
+    from models import Expenses
+    if request.method == 'PUT':
+        req = request.get_json()
+        return Expenses.update_expense(expenses_id, **req)
+    else:
+        return Expenses.delete_expenses(expenses_id)
 
 if __name__ == '__main__':
     app.run(debug=DEBUG, port=PORT)
