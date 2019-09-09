@@ -114,7 +114,64 @@ class MemberSchema(marshmallow.Schema):
 member_schema = MemberSchema()
 members_schema = MemberSchema(many=True)
 
+# ------------------------------------ EXPENSES -------------------------------------------
+class Expenses(db.Model):
+    __table_args__ = {'extend_existing': True}
 
+    id = db.Column(db.Integer, primary_key = True)
+    acct_payable = db.Column(db.Integer)
+    acct_receivable = db.Column(db.Integer)
+    total= db.Column(db.Integer)
+    member = db.Column(db.Integer, db.ForeignKey('member.id'))
+
+    def __init__(self, acct_receivable, acct_payable, total, member):
+        self.acct_receivable = acct_receivable
+        self.acct_payable = acct_payable
+        self.total = total
+        self.member = member
+    
+    @classmethod
+    def create_expense(cls, acct_receivable, acct_payable, total, member):
+        new_expense = Expenses(acct_receivable, acct_payable, total, member)
+        try: 
+            db.session.add(new_expense)
+            db.session.commit()
+        except:
+            db.session.rollback()
+            raise
+        return expense_schema.jsonify(new_expense)
+    @classmethod
+    def get_expense(cls, expense_id):
+        expense = Expense.query.get(expense_id)
+        return expense_schema.jsonify(expense)
+    @classmethod
+    def get_expenses(cls):
+        expenses = Expenses.query.all()
+        return expenses_schema.jsonify(expenses)
+    @classmethod
+    def delete_expense(cls, expense_id):
+        expense = Expenses.query.get(expense_id)
+        db.session.delete(expense)
+        db.session.commit
+        return expense_schema.jsonify(expense)
+    @classmethod
+    def update_member(cls, acct_receivable=None, acct_payable=None, total=None):
+        expense = Expenses.query.get(expense_id)
+        if acct_receivable != None:
+            expense.acct_receivable = acct_receivable 
+        if acct_payable != None:
+            expense.acct_payable = acct_payable
+        if total != None:
+        expense.total = total
+        db.session.commit()
+        return expense_schema.jsonify(expense)
+
+class ExpenseSchema(marshmallow.Schema):
+    class Meta:
+        fields = ('id', 'acct_receivable', 'acct_payable', 'total' )
+
+expense_schema = ExpensesSchema()
+expenses_schema = ExpensesSchema(many=True)
 
 if __name__ == 'models':
     db.create_all()

@@ -26,6 +26,7 @@ PORT = 8000
 def hello_world():
     return 'Hello World'
 
+# ------------------------------------ GROUPS -------------------------------------------
 @app.route('/group', methods=['GET', 'POST'])
 @app.route('/group/<group_id>', methods=['GET', 'POST'])
 def create_or_read_group(group_id=None):
@@ -46,7 +47,7 @@ def destroy_or_modify_group(group_id):
     else:
         return Group.delete_group(group_id)
 
-
+# ------------------------------------ MEMBERS -------------------------------------------
 @app.route('/member', methods=['POST', 'GET'])
 @app.route('/member/<member_id>', methods=['GET'])
 def get_or_create_member(member_id=None):
@@ -70,6 +71,8 @@ def update_or_delete_member(member_id=None):
         return Member.update_member(member_id, **req)
     else:
         return Member.delete_member(member_id)
+
+# ------------------------------------ EXPENSES -------------------------------------------
 
 if __name__ == '__main__':
     app.run(debug=DEBUG, port=PORT)
