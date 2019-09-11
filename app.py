@@ -23,8 +23,6 @@ marshmallow = Marshmallow(app)
 DEBUG = True
 PORT = 8000
 
-
-
 @app.route("/")
 def expense():
     from models import Expenses
@@ -49,11 +47,6 @@ def add_expense():
     return redirect(url_for('expense'))
 
 # New route that is will delete entries
-
-
-
-
-    
 
 # ------------------------------------ GROUPS -------------------------------------------
 @app.route('/group', methods=['GET', 'POST'])

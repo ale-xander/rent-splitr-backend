@@ -1,28 +1,35 @@
 
+body{
+  font-family: 'Amiko', sans-serif;
+}
+/* JAVASCRIPT STYLING */
 .member-container {
-    border: solid black 1px;  
     height: 90vh;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
     grid-column-gap: 10px;
     grid-row-gap: 0px;
-    padding: 1em;
+    padding: .5em;
+    font-size: 1em;
+    line-height: .8em;
   }
   .member{
     grid-area: 1;
-    border: solid red 2px;
   }
   .line-item {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 40% 40% 10% 10%;
     grid-template-rows: 1fr;
-    grid-column-gap: 1em;
-    grid-row-gap: 0px;
+    grid-template-areas: ". . . .";
+    padding-top: 1em;
+    
   }
-  .description {
-    grid-area: 1;
+  .line-item-description {
+
+    padding: 1em;
   }
-  .amount{
-    grid-area: 1;
+  .line-item-amount{
+  
+    padding: 1em;
   }

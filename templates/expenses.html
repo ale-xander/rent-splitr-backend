@@ -5,15 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Amiko&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/all.css">
     <link rel="stylesheet" href="../static/css/main.css">
-    <title>Document</title>
+    <title>Rent Splitr</title>
 </head>
 
 <body>
     <div class="member-container">
-       
         <div class="member">
-            Aria
+            <h2>Aria</h2>
             <hr>
             <form action="{{url_for('add_expense')}}" method='POST' id="ExpenseFormOne">
                 <input type="text" name="description" id="ExpenseDescriptionOne"
@@ -22,20 +23,24 @@
                 <input type="hidden" name="member" value="1"></input>
                 <button type="submit">Add Expense</button>
             </form>
-            <section id="ExpenseListOne"></section>
+            <section id="ExpenseListOne">
+                {% for expense in expenses %}
+                <div class="line-item">
+                    <span class="line-item-left">{{expense.description}}</span>
+                    <span class="line-item-right">{{expense.amount}}</span>
+                    <span class="line-item-edit"> <a href="#"> <i class="far fa-edit"></i></a></span>
+                    <span class="line-item-delete"><a href="#"> <i class="far fa-trash-alt"></i></a></span>
+                </div>
+                
+                <!-- <p>{{expense.member}}</p>
+                <p>{{expense.id}}</p> -->
+                {% endfor %}
+            </section>
         </div>
 
         <div class="member">
-            Bran
+            <h2>Bran</h2>
             <hr>
-            <p>Our Context should Render Here</p>
-            {% for expense in expenses %}
-            <p>Expenses Go Below</p>
-            <p>{{expense.description}}<span>{{expense.amount}}</span></p>
-            
-            <p>{{expense.member}}</p>
-            <p>{{expense.id}}</p>
-            {% endfor %}
 
             <form id="ExpenseFormTwo">
                 <input type="text" name="expense-description-one" id="expense-description-one"
@@ -47,7 +52,7 @@
         </div>
 
         <div class="member">
-            Cersei
+            <h2>Cersei</h2>
             <hr>
             <form id="ExpenseFormThree">
                 <input type="text" name="expense-description-one" id="expense-description-one"
@@ -64,7 +69,8 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous">
     </script>
-    {# <script src="../static/scripts/app.js"></script> #} 
+    <script src="../static/scripts/all.min.js"></script>
+    <!-- <script src="../static/scripts/app.js"></script> -->
 
 </body>
 
