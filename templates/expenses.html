@@ -17,13 +17,13 @@
             <h2>Aria</h2>
             <hr>
             <form action="{{url_for('add_expense')}}" method='POST' id="ExpenseFormOne">
-                <input type="text" name="description" id="ExpenseDescriptionOne"
-                    placeholder="Enter an expense">
+                <input type="text" name="description" id="ExpenseDescriptionOne" placeholder="Enter an expense">
                 <input type="number" name="amount" id="ExpenseAmountOne">
                 <input type="hidden" name="member" value="1"></input>
                 <button type="submit">Add Expense</button>
             </form>
             <section id="ExpenseListOne">
+                {% if expense.member == 1 %}
                 {% for expense in expenses %}
                 <div class="line-item">
                     <span class="line-item-left">{{expense.description}}</span>
@@ -31,10 +31,10 @@
                     <span class="line-item-edit"> <a href="#"> <i class="far fa-edit"></i></a></span>
                     <span class="line-item-delete"><a href="#"> <i class="far fa-trash-alt"></i></a></span>
                 </div>
-                
                 <!-- <p>{{expense.member}}</p>
                 <p>{{expense.id}}</p> -->
                 {% endfor %}
+                {% endif %}
             </section>
         </div>
 
@@ -42,33 +42,53 @@
             <h2>Bran</h2>
             <hr>
 
-            <form id="ExpenseFormTwo">
-                <input type="text" name="expense-description-one" id="expense-description-one"
-                    placeholder="Enter an expense">
-                <input type="number" name="expense-amount-one" id="expense-amount-one">
+            <form action="{{url_for('add_expense')}}" method='POST' id="ExpenseFormTwo">
+                <input type="text" name="description" id="ExpenseDescriptionTwo" placeholder="Enter an expense">
+                <input type="number" name="amount" id="ExpenseAmountTwo">
+                <input type="hidden" name="member" value="2"></input>
                 <button type="submit">Add Expense</button>
             </form>
-            <section id="ExpenseListTwo"></section>
+            <section id="ExpenseListTwo">
+                {% if expense.member == 2 %}
+                {% for expense in expenses %}
+                <div class="line-item">
+                    <span class="line-item-left">{{expense.description}}</span>
+                    <span class="line-item-right">{{expense.amount}}</span>
+                    <span class="line-item-edit"> <a href="#"> <i class="far fa-edit"></i></a></span>
+                    <span class="line-item-delete"><a href="#"> <i class="far fa-trash-alt"></i></a></span>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </section>
         </div>
 
         <div class="member">
             <h2>Cersei</h2>
             <hr>
-            <form id="ExpenseFormThree">
-                <input type="text" name="expense-description-one" id="expense-description-one"
-                    placeholder="Enter an expense">
-                <input type="number" name="expense-amount-one" id="expense-amount-one">
+            <form action="{{url_for('add_expense')}}" method='POST' id="ExpenseFormThree">
+                <input type="text" name="description" id="ExpenseDescriptionThree" placeholder="Enter an expense">
+                <input type="number" name="amount" id="ExpenseAmountThree">
+                <input type="hidden" name="member" value="3"></input>
                 <button type="submit">Add Expense</button>
             </form>
-            <section id="ExpenseListThree"></section>
+            <section id="ExpenseListThree">
+                {% if expense.member == 3 %}
+                {% for expense in expenses %}
+                <div class="line-item">
+                    <span class="line-item-left">{{expense.description}}</span>
+                    <span class="line-item-right">{{expense.amount}}</span>
+                    <span class="line-item-edit"> <a href="#"> <i class="far fa-edit"></i></a></span>
+                    <span class="line-item-delete"><a href="#"> <i class="far fa-trash-alt"></i></a></span>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </section>
         </div>
     </div>
 
-    <script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+        </script>
     <script src="../static/scripts/all.min.js"></script>
     <!-- <script src="../static/scripts/app.js"></script> -->
 

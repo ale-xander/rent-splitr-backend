@@ -28,14 +28,11 @@ def expense():
     from models import Expenses
     expenses = Expenses.query.all()
     # print(expenses.description())
-
     print(expenses)
-
     return render_template('expenses.html', expenses=expenses)
 
 @app.route("/add_expense", methods=("POST",))
 def add_expense():
-
     from models import Expenses
     if request.method == "POST":
         Expenses.create_expense(
@@ -43,10 +40,15 @@ def add_expense():
             amount = request.form["amount"],
             member = request.form["member"]
         )
-
     return redirect(url_for('expense'))
 
 # New route that is will delete entries
+@app.route('/delete_expense/<id>', methods=("DELETE",))
+def delete_expense():
+    from models import Expenses
+    if request.method == 'DELETE':
+        Expenses.delete().where(expense.id == id) 
+    #This might need to be tweaked a little, refer to SQL Alchemy Docs
 
 # ------------------------------------ GROUPS -------------------------------------------
 @app.route('/group', methods=['GET', 'POST'])
