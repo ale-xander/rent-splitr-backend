@@ -1,0 +1,28 @@
+
+.member-container {
+    border: solid black 1px;  
+    height: 90vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 0px;
+    padding: 1em;
+  }
+  .member{
+    grid-area: 1;
+    border: solid red 2px;
+  }
+  .line-item {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 1em;
+    grid-row-gap: 0px;
+  }
+  .description {
+    grid-area: 1;
+  }
+  .amount{
+    grid-area: 1;
+  }

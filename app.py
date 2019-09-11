@@ -1,9 +1,11 @@
 import os
 
-from flask import Flask, request
+from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -12,7 +14,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 DATABASE = 'sqlite:///' + os.path.join(basedir, 'db.rent_splitr')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #to not mess with sqlite
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
@@ -21,10 +23,37 @@ marshmallow = Marshmallow(app)
 DEBUG = True
 PORT = 8000
 
-#this is how you define a route
-@app.route('/') 
-def hello_world():
-    return 'Hello World'
+
+
+@app.route("/")
+def expense():
+    from models import Expenses
+    expenses = Expenses.query.all()
+    # print(expenses.description())
+
+    print(expenses)
+
+    return render_template('expenses.html', expenses=expenses)
+
+@app.route("/add_expense", methods=("POST",))
+def add_expense():
+
+    from models import Expenses
+    if request.method == "POST":
+        Expenses.create_expense(
+            description = request.form["description"],
+            amount = request.form["amount"],
+            member = request.form["member"]
+        )
+
+    return redirect(url_for('expense'))
+
+# New route that is will delete entries
+
+
+
+
+    
 
 # ------------------------------------ GROUPS -------------------------------------------
 @app.route('/group', methods=['GET', 'POST'])
@@ -81,11 +110,10 @@ def get_or_create_expenses(expenses_id=None):
     if expenses_id == None and request.method == 'GET':
         return Expenses.get_expenses()
     elif expenses_id == None:
-        acct_receivable = request.json['acct_receivable']
-        acct_payable = request.json['acct_payable']
-        total = request.json['total']
+        description = request.json['description']
+        amount = request.json['amount']
         member = request.json['member']
-        return Expenses.create_expense(acct_receivable, acct_payable, total, member)
+        return Expenses.create_expense(description, amount, member)
     else:
         return Expenses.get_expense(expenses_id)
 
@@ -96,7 +124,7 @@ def update_or_delete_expenses(expenses_id=None):
         req = request.get_json()
         return Expenses.update_expense(expenses_id, **req)
     else:
-        return Expenses.delete_expenses(expenses_id)
+        return Expenses.delete_expense(expenses_id)
 
 if __name__ == '__main__':
     app.run(debug=DEBUG, port=PORT)

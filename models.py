@@ -119,20 +119,18 @@ class Expenses(db.Model):
     __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key = True)
-    acct_payable = db.Column(db.Integer)
-    acct_receivable = db.Column(db.Integer)
-    total= db.Column(db.Integer)
+    description = db.Column(db.String(50))
+    amount = db.Column(db.Integer)
     member = db.Column(db.Integer, db.ForeignKey('member.id'))
 
-    def __init__(self, acct_receivable, acct_payable, total, member):
-        self.acct_receivable = acct_receivable
-        self.acct_payable = acct_payable
-        self.total = total
+    def __init__(self, description, amount, member):
+        self.description = description
+        self.amount = amount
         self.member = member
     
     @classmethod
-    def create_expense(cls, acct_receivable, acct_payable, total, member):
-        new_expense = Expenses(acct_receivable, acct_payable, total, member)
+    def create_expense(cls, description, amount, member):
+        new_expense = Expenses(description, amount, member)
         try: 
             db.session.add(new_expense)
             db.session.commit()
@@ -155,20 +153,18 @@ class Expenses(db.Model):
         db.session.commit
         return expense_schema.jsonify(expense)
     @classmethod
-    def update_expenses(cls, acct_receivable=None, acct_payable=None, total=None):
+    def update_expenses(cls, description=None, amount=None):
         expense = Expenses.query.get(expense_id)
-        if acct_receivable != None:
-            expense.acct_receivable = acct_receivable 
-        if acct_payable != None:
-            expense.acct_payable = acct_payable
-        if total != None:
-            expense.total = total
+        if description != None:
+            expense.description = description
+        if amount != None:
+            expense.amount = amount
             db.session.commit()
         return expense_schema.jsonify(expense)
 
 class ExpensesSchema(marshmallow.Schema):
     class Meta:
-        fields = ('id', 'acct_receivable', 'acct_payable', 'total' )
+        fields = ('id', 'description', 'amount' )
 
 expense_schema = ExpensesSchema()
 expenses_schema = ExpensesSchema(many=True)
