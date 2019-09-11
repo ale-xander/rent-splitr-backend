@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,25 +22,24 @@
                 <button type="submit">Add Expense</button>
             </form>
             <section id="ExpenseListOne">
-                {% if expense.member == 1 %}
                 {% for expense in expenses %}
-                <div class="line-item">
+                {% if expense.member == 1 %}
+                <div class="line-item" id="{{expense.id}}">
                     <span class="line-item-left">{{expense.description}}</span>
                     <span class="line-item-right">{{expense.amount}}</span>
-                    <span class="line-item-edit"> <a href="#"> <i class="far fa-edit"></i></a></span>
-                    <span class="line-item-delete"><a href="#"> <i class="far fa-trash-alt"></i></a></span>
+                    <span class="line-item-edit edit-button"><i class="far fa-edit"></i></span>
+                    <form action="{{url_for('delete_expense', id=expense.id )}}" method="get">
+                        <button type="submit"><i class="far fa-trash-alt"></i></button>
+                    </form>
                 </div>
-                <!-- <p>{{expense.member}}</p>
-                <p>{{expense.id}}</p> -->
-                {% endfor %}
                 {% endif %}
+                {% endfor %}
             </section>
         </div>
 
         <div class="member">
             <h2>Bran</h2>
             <hr>
-
             <form action="{{url_for('add_expense')}}" method='POST' id="ExpenseFormTwo">
                 <input type="text" name="description" id="ExpenseDescriptionTwo" placeholder="Enter an expense">
                 <input type="number" name="amount" id="ExpenseAmountTwo">
@@ -49,16 +47,20 @@
                 <button type="submit">Add Expense</button>
             </form>
             <section id="ExpenseListTwo">
-                {% if expense.member == 2 %}
+
                 {% for expense in expenses %}
+                {% if expense.member == 2 %}
                 <div class="line-item">
                     <span class="line-item-left">{{expense.description}}</span>
                     <span class="line-item-right">{{expense.amount}}</span>
-                    <span class="line-item-edit"> <a href="#"> <i class="far fa-edit"></i></a></span>
-                    <span class="line-item-delete"><a href="#"> <i class="far fa-trash-alt"></i></a></span>
+                    <span class="line-item-edit edit-button"><i class="far fa-edit"></i></span>
+                    <form action="{{url_for('delete_expense', id=expense.id )}}" method="get">
+                        <button type="submit"><i class="far fa-trash-alt"></i></button>
+                    </form>
                 </div>
-                {% endfor %}
                 {% endif %}
+                {% endfor %}
+
             </section>
         </div>
 
@@ -72,16 +74,19 @@
                 <button type="submit">Add Expense</button>
             </form>
             <section id="ExpenseListThree">
-                {% if expense.member == 3 %}
                 {% for expense in expenses %}
+                {% if expense.member == 3 %}
                 <div class="line-item">
                     <span class="line-item-left">{{expense.description}}</span>
                     <span class="line-item-right">{{expense.amount}}</span>
-                    <span class="line-item-edit"> <a href="#"> <i class="far fa-edit"></i></a></span>
-                    <span class="line-item-delete"><a href="#"> <i class="far fa-trash-alt"></i></a></span>
+                    <span class="line-item-edit edit-button"> <i class="far fa-edit"></i></span>
+                    <form action="{{url_for('delete_expense', id=expense.id )}}" method="get">
+                        <button type="submit"><i class="far fa-trash-alt"></i></button>
+                    </form>
                 </div>
-                {% endfor %}
                 {% endif %}
+                {% endfor %}
+
             </section>
         </div>
     </div>
@@ -90,7 +95,7 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
         </script>
     <script src="../static/scripts/all.min.js"></script>
-    <!-- <script src="../static/scripts/app.js"></script> -->
+    <script src="../static/scripts/app.js"></script>
 
 </body>
 

@@ -153,14 +153,14 @@ class Expenses(db.Model):
         db.session.commit
         return expense_schema.jsonify(expense)
     @classmethod
-    def update_expenses(cls, description=None, amount=None):
+    def update_expenses(cls, expense_id, description=None, amount=None):
         expense = Expenses.query.get(expense_id)
         if description != None:
             expense.description = description
         if amount != None:
             expense.amount = amount
             db.session.commit()
-        return expense_schema.jsonify(expense)
+        
 
 class ExpensesSchema(marshmallow.Schema):
     class Meta:

@@ -43,12 +43,12 @@ def add_expense():
     return redirect(url_for('expense'))
 
 # New route that is will delete entries
-@app.route('/delete_expense/<id>', methods=("DELETE",))
-def delete_expense():
+@app.route('/delete_expense/<id>', methods=("GET",))
+def delete_expense(id):
     from models import Expenses
-    if request.method == 'DELETE':
-        Expenses.delete().where(expense.id == id) 
-    #This might need to be tweaked a little, refer to SQL Alchemy Docs
+    if request.method == 'GET':
+        Expenses.delete_expense(id)
+    return redirect(url_for('expense')) 
 
 # ------------------------------------ GROUPS -------------------------------------------
 @app.route('/group', methods=['GET', 'POST'])
@@ -112,14 +112,14 @@ def get_or_create_expenses(expenses_id=None):
     else:
         return Expenses.get_expense(expenses_id)
 
-@app.route('/expenses/<expenses_id>', methods=['PUT', 'DELETE'])
+@app.route('/expenses/<expenses_id>', methods=['PUT',])
 def update_or_delete_expenses(expenses_id=None):
     from models import Expenses
     if request.method == 'PUT':
-        req = request.get_json()
-        return Expenses.update_expense(expenses_id, **req)
-    else:
-        return Expenses.delete_expense(expenses_id)
+        description = request.json['description']
+        amount = request.json['amount']
+        Expenses.update_expenses(expenses_id, description, amount)
+        return redirect(url_for('expense')) 
 
 if __name__ == '__main__':
     app.run(debug=DEBUG, port=PORT)
